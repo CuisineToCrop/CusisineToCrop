@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import Nav from "./nav.jsx";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+import localFont from "next/dist/compiled/@next/font/dist/local/index.js";
 
 export default function DashboardLayout({ children }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -25,3 +27,4 @@ export default function DashboardLayout({ children }) {
     </div>
   );
 }
+

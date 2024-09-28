@@ -6,6 +6,8 @@ const Menus = [
   { title: "Dashboard", src: "Chart_fill" },
   { title: "Inbox", src: "Chat" },
   { title: "Accounts", src: "User" },
+  { title: "Details", src: "Ingredients" },
+  { title: "Logout", src: "Logout" },
 ];
 
 export default function Nav({ isMobile }) {
