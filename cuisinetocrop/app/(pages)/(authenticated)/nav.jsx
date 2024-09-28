@@ -1,79 +1,151 @@
 "use client";
-import { useState } from "react";
-import { useUser } from "@auth0/nextjs-auth0/client";
 
-const Menus = [
-  { title: "Dashboard", src: "Chart_fill" },
-  { title: "Inbox", src: "Chat" },
-  { title: "Accounts", src: "User" },
-];
+import Link from "next/link";
+import Image from "next/image";
+import Logo from "./Logo.jpg";
+import { useState, useEffect } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
 
-export default function Nav({ isMobile }) {
-  const { user } = useUser();
-  const [isOpen, setIsOpen] = useState(false);
+const Nav = ({ children }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); //used for HAMBURGER
+  const [navbarHeight, setNavbarHeight] = useState("h-24");
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    const handleResize = () => {
+      // determines if mobile
+      setIsMobile(window.innerWidth < 1025);
+    };
 
-  const navClasses = `fixed top-0 left-0 h-screen bg-[#02254D] transition-all duration-300 ease-in-out z-50
-        ${
-          isMobile
-            ? isOpen
-              ? "w-60"
-              : "w-0 -left-full"
-            : isOpen
-            ? "w-52"
-            : "w-20"
-        }`;
+    const handleScroll = () => {
+      if (isMobile) {
+        setNavbarHeight("h-16");
+      } else {
+        const scrollThreshold = 440; //scroll value
+        if (window.scrollY > scrollThreshold) {
+          setNavbarHeight("h-16");
+        } else {
+          setNavbarHeight("h-24");
+        }
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const toggleMenu = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
 
   return (
-    <nav className={navClasses}>
-      {isMobile && (
-        <div className="h-16 flex items-center px-4">
-          <button
-            onClick={toggleMenu}
-            className="text-white bg-zinc-700 p-2 rounded-md"
-          >
-            {isOpen ? "✕" : "☰"}
-          </button>
-        </div>
-      )}
-
-      <div className="h-[calc(100%-4rem)] overflow-y-auto">
-        <ul className="pt-4">
-          {user && (
-            <li className="flex items-center px-4 py-2 mb-4 text-gray-300">
-              <img
-                src={user.picture}
-                className="w-12 h-12 rounded-full"
-                alt="User profile"
-              />
-              {isOpen && <span className="ml-4 text-lg">Profile</span>}
-            </li>
+    <nav
+      className={`sticky top-0 w-full ${navbarHeight} bg-[#02254D] z-50 transition-all duration-300`}
+    >
+      <div className="w-full h-full flex justify-between items-center px-4 sm:px-6 md:px-6">
+        <div className="justify-between flex space-x-8 items-center">
+          <Link href="/">
+            <Image
+              src={Logo}
+              alt="Logo"
+              width={65}
+              height={50}
+              className="cursor-pointer"
+              priority
+            />
+          </Link>
+          {!isMobile && (
+            <>
+              <Link href="/about">
+                <div className="font-bold text-lg">About</div>
+              </Link>
+              <Link href="/pricing">
+                <div className="font-bold text-lg">Pricing</div>
+              </Link>
+              <Link href="/contact">
+                <div className="font-bold text-lg">Contact Us</div>
+              </Link>
+              <Link href="/howtouse">
+                <div className="font-bold text-lg">How to Use</div>
+              </Link>
+            </>
           )}
-          {Menus.map((menu, index) => (
-            <li
-              key={index}
-              className="flex items-center px-4 py-2 mt-4 text-gray-300 cursor-pointer hover:bg-zinc-500"
+        </div>
+        {!isMobile && (
+          <div className="justify-between flex space-x-6 items-center">
+            <Link href="/dashboard">
+              <div className="font-bold text-lg">Sign up</div>
+            </Link>
+            <Link href="/dashboard">
+              <div className="font-bold text-lg">Log in</div>
+            </Link>
+            <Link href="/dashboard">
+              <div className="font-bold text-lg bg-[#fff7db] text-black px-3 py-2 rounded-xl hover:bg-gray-400 cursor-pointer">
+                Get started
+              </div>
+            </Link>
+          </div>
+        )}
+        {isMobile && (
+          <div className="cursor-pointer">
+            <FaBars onClick={toggleMenu} size={24} />
+          </div>
+        )}
+        {isMobile && (
+          <>
+            {isOpen && ( //panel closer
+              <div
+                className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-40 transition-opacity duration-300"
+                onClick={toggleMenu}
+              ></div>
+            )}
+            <div
+              className={`fixed top-0 right-0 w-3/4 h-full bg-[#02254D] shadow-xl z-50 flex flex-col p-4 transform transition-all duration-300 ease-in-out ${
+                //panel opener
+                isOpen ? "translate-x-0" : "translate-x-full" //conditional, isOpen = true -> translates element 0, false -> translates it to right
+              }`}
             >
-              <img
-                className="w-12 h-12"
-                src={`https://cdn-icons-png.flaticon.com/128/739/739249.png`}
-                alt={menu.title}
-              />
-              {isOpen && <span className="ml-4 text-lg">{menu.title}</span>}
-            </li>
-          ))}
-        </ul>
+              <div className="flex justify-end">
+                <FaTimes
+                  onClick={toggleMenu}
+                  size={24}
+                  className="cursor-pointer"
+                />
+              </div>
+              <Link href="/about" onClick={closeMenu}>
+                <div className="font-bold text-lg py-2">About</div>
+              </Link>
+              <Link href="/pricing" onClick={closeMenu}>
+                <div className="font-bold text-lg py-2">Pricing</div>
+              </Link>
+              <Link href="/contact" onClick={closeMenu}>
+                <div className="font-bold text-lg py-2">Contact Us</div>
+              </Link>
+              <Link href="/howtouse" onClick={closeMenu}>
+                <div className="font-bold text-lg py-2">How to Use</div>
+              </Link>
+              <Link href="/dashboard" onClick={closeMenu}>
+                <div className="font-bold text-lg py-2">Sign Up</div>
+              </Link>
+              <Link href="/dashboard" onClick={closeMenu}>
+                <div className="font-bold text-lg py-2">Sign In</div>
+              </Link>
+            </div>
+          </>
+        )}
       </div>
-
-      {!isMobile && (
-        <button
-          onClick={toggleMenu}
-          className="absolute -right-5 top-16 bg-zinc-600 rounded-full p-2"
-        >
-          {isOpen ? "◀" : "▶"}
-        </button>
-      )}
     </nav>
   );
-}
+};
+
+export default Nav;
