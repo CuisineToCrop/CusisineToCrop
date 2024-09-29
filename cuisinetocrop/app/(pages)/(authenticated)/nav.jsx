@@ -1,13 +1,12 @@
 "use client";
 import { useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import Link from "next/link";
 
 const Menus = [
-  { title: "Dashboard", src: "Chart_fill" },
-  { title: "Accounts", src: "User" },
-  { title: "Details", src: "Ingredients" },
-  { title: "Settings", src: "Settings" },
-  { title: "Logout", src: "Logout" },
+  { title: "Dashboard", src: "Chart_fill", href: "/dashboard" },
+  { title: "Accounts", src: "User", href: "/account" },
+  { title: "Details", src: "Ingredients", href: "/details" },
 ];
 
 export default function Nav({ isMobile }) {
@@ -53,18 +52,29 @@ export default function Nav({ isMobile }) {
             </li>
           )}
           {Menus.map((menu, index) => (
-            <li
-              key={index}
-              className="flex items-center px-4 py-2 mt-4 text-gray-300 cursor-pointer hover:bg-zinc-500"
-            >
-              <img
-                className="w-12 h-12"
-                src={`https://cdn-icons-png.flaticon.com/128/739/739249.png`}
-                alt={menu.title}
-              />
-              {isOpen && <span className="ml-4 text-lg">{menu.title}</span>}
+            <li key={index}>
+              <Link href={menu.href} className="flex items-center px-4 py-2 mt-4 text-gray-300 cursor-pointer hover:bg-zinc-500">
+                <img
+                  className="w-12 h-12"
+                  src={`https://cdn-icons-png.flaticon.com/128/739/739249.png`}
+                  alt={menu.title}
+                />
+                {isOpen && <span className="ml-4 text-lg">{menu.title}</span>}
+              </Link>
             </li>
           ))}
+          {user && (
+            <li>
+              <Link href="/api/auth/logout" className="flex items-center px-4 py-2 mt-4 text-gray-300 cursor-pointer hover:bg-zinc-500">
+                <img
+                  className="w-12 h-12"
+                  src={`https://cdn-icons-png.flaticon.com/128/739/739249.png`}
+                  alt="Logout"
+                />
+                {isOpen && <span className="ml-4 text-lg">Logout</span>}
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
 

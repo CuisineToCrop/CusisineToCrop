@@ -27,7 +27,7 @@ export default function Home() {
               className="flex-grow p-2 border border-[#40C9A2] rounded-l-lg focus:outline-none focus:ring-2 focus:ring-[#40C9A2]"
             />
             <button className="bg-[#40C9A2] text-white px-4 py-2 rounded-r-lg hover:bg-[#3BB191] transition duration-300">
-              Search
+              Log in
             </button>
           </div>
         </section>
