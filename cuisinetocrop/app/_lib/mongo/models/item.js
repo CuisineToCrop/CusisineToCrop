@@ -7,4 +7,5 @@ const ItemSchema = new mongoose.Schema({
     description: {type: String, required:true},
     ingredients: [{type:String}],
 });
-export const Item = mongoose.models.Item || mongoose.model("Item",ItemSchema);
+
+export const Item = mongoose.models.Item || mongoose.model("Item", ItemSchema);
