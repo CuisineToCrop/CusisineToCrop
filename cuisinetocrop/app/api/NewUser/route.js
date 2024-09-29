@@ -20,6 +20,7 @@ export const POST = withApiAuthRequired(async function NewUser(req) {
         // TODO: Add your database logic here
         // For example, you might want to save this information to a database
         // This is just a placeholder for now
+
         console.log("New restaurant information received:", { restaurantUrl, zipCode });
 
         // TODO: Add any additional processing or validation here

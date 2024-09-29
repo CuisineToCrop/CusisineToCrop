@@ -32,6 +32,6 @@ export async function ScrapeMenuItems(url) {
     throw error; // Re-throw the error to be caught in the API route
   }
 
-  console.log("Scraped items:", items);
+  // console.log("Scraped items:", items);
   return items;
 }
