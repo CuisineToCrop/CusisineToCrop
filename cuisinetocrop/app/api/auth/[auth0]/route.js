@@ -1,14 +1,12 @@
 import { handleAuth, handleLogin, handleCallback } from "@auth0/nextjs-auth0";
-// import { FindUser } from "@/app/_lib/mongoDB/utils/FindUser.js";
+import { findUserBySubId } from "@/app/_lib/mongo/utils/finduser";
 
 const afterCallback = async (req, session, state) => {
   try {
-    // const isNewUser = await addNewUser(session.user.sub, session.user.email);
-    
-    // Add a custom claim to the session
-    // session.user.isNewUser = isNewUser;
-	session.user.isNewUser = true;
-	console.log(session.user);
+    const user = await findUserBySubId(session.user.sub);
+    session.user.isNewUser = !user;
+
+    console.log(session.user);
     return session;
   } catch (error) {
     console.error("Error in afterCallback:", error);
