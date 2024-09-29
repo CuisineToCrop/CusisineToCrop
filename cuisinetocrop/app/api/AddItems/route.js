@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
 import { AddNewItems } from '../../_lib/mongo/utils/addnewitems';
+import { withApiAuthRequired, getSession } from "@auth0/nextjs-auth0";
 
-export async function POST(req) {
+export const POST = withApiAuthRequired (async function AddItems(req) {
+    const session = await getSession(req);
+        const user = session.user;
+        const { userID } = user.sub;
   console.log("Received POST request");
   try {
     // Parse the request body
     const body = await req.json();
-    const { userID, items } = body;
+    const { items } = body;
 
     // Validate the input
     if (!userID || !Array.isArray(items) || items.length === 0) {
