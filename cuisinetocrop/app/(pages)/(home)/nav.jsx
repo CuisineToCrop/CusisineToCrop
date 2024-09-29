@@ -50,7 +50,7 @@ const Nav = ({ children }) => {
 
   return (
     <nav
-      className={`sticky top-0 w-full ${navbarHeight} bg-[#02254D] z-50 transition-all duration-300`}
+      className={`sticky top-0 w-full ${navbarHeight} bg-[#0075A2] z-50 transition-all duration-300`}
     >
       <div className="w-full h-full flex justify-between items-center px-4 sm:px-6 md:px-6">
         <div className="justify-between flex space-x-8 items-center">
@@ -110,7 +110,7 @@ const Nav = ({ children }) => {
               ></div>
             )}
             <div
-              className={`fixed top-0 right-0 w-3/4 h-full bg-[#02254D] shadow-xl z-50 flex flex-col p-4 transform transition-all duration-300 ease-in-out ${
+              className={`fixed top-0 right-0 w-3/4 h-full bg-[#0075A2] shadow-xl z-50 flex flex-col p-4 transform transition-all duration-300 ease-in-out ${
                 //panel opener
                 isOpen ? "translate-x-0" : "translate-x-full" //conditional, isOpen = true -> translates element 0, false -> translates it to right
               }`}
