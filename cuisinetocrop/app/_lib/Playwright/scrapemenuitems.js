@@ -10,14 +10,14 @@ export async function ScrapeMenuItems(url) {
     const page = await context.newPage();
     
     await page.goto(url);
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(15000);
     
     const itemSelector = 'li[data-test^="store-item-"]';
     items = await page.$$eval(itemSelector, (elements) => {
       return elements.map(el => {
         const titleEl = el.querySelector('[data-testid="rich-text"]');
         const descriptionEl = el.querySelector('.p7');
-
+        
         return {
           title: titleEl ? titleEl.textContent.trim() : null,
           description: descriptionEl ? descriptionEl.textContent.trim() : null,
