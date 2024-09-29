@@ -16,7 +16,7 @@ export async function ScrapeMenuItems(url) {
     items = await page.$$eval(itemSelector, (elements) => {
       return elements.map(el => {
         const titleEl = el.querySelector('[data-testid="rich-text"]');
-        const descriptionEl = el.querySelector('.we');
+        const descriptionEl = el.querySelector('.p7');
 
         return {
           title: titleEl ? titleEl.textContent.trim() : null,

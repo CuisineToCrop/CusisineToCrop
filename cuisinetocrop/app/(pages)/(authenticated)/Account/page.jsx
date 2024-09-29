@@ -15,7 +15,7 @@ export default function Account() {
         <div>
           <img src={user.picture} alt={user.name} />
           <h2>{user.name}</h2>
-          {/* <p>{user.email}</p>  Commented out to avoid displaying email*/}
+          <p>{user.email}</p>
           <a href="/api/auth/logout">
             <button className="rounded-full bg-red-500 text-white px-4 py-2">
               Log out
