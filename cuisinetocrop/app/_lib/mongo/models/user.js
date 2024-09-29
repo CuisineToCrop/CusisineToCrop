@@ -1,5 +1,4 @@
-const mongoose = require( 'mongoose')
-
+import mongoose from "mongoose"
 const userSchema = new mongoose.Schema ({
     userID: {type:String, required:true, unique:true},
     restaurantName:{type:String, required:true}, 

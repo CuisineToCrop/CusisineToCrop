@@ -1,29 +1,41 @@
 import { NextResponse } from 'next/server';
-import { Result } from 'postcss';
+import { AddNewItems } from '../../_lib/mongo/utils/addnewitems';
+import { withApiAuthRequired, getSession } from "@auth0/nextjs-auth0";
 
-export async function POST(req){
-    try {
-        const body = await req.json();
-        const { userID, items } = body;
+export const POST = withApiAuthRequired (async function AddItems(req) {
+    const session = await getSession(req);
+        const user = session.user;
+        const { userID } = user.sub;
+  console.log("Received POST request");
+  try {
+    // Parse the request body
+    const body = await req.json();
+    const { items } = body;
 
-        if (!userID || !Array.isArray (items) || items.length == 0) {
-            return NextResponse.json(
-                {error: 'Inavild input. userID and non-empty items array are required.'},
-                { status:400}
-            );
-        }
-
-        const result = await addNewItems (userID, items);
-        return NextResponse.json (
-            {
-                message: `Succesfully added ${result.lenth} items`,
-                addedItems:Result
-            },
-            {status:201}
-        );
+    // Validate the input
+    if (!userID || !Array.isArray(items) || items.length === 0) {
+      return NextResponse.json(
+        { error: 'Invalid input. userID and non-empty items array are required.' },
+        { status: 400 }
+      );
     }
-    catch(error) {
-        console.error('Error in POST request:', error);
-        return NextResponse.json({error: error.message}, {status: 500});
-    }
-}
+
+    // Log the received data
+    console.log('Received userID:', userID);
+    console.log('Received items:', items);
+
+    const result = await AddNewItems(userID, items);
+
+    // Return the result and success message
+    return NextResponse.json(
+      {
+        message: `Successfully added ${result.length} items`,
+        addedItems: result
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error('Error in POST request:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+})

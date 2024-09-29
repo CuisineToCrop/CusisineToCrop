@@ -36,6 +36,7 @@ export default function Dashboard() {
     return <div>Loading...</div>; // Show loading state while fetching user data
   }
 
+
   if (error) {
     return <div>{error.message}</div>; // Show error if there's an issue with Auth0
   }
