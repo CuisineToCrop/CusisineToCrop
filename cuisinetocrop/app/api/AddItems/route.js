@@ -38,4 +38,4 @@ export const POST = withApiAuthRequired (async function AddItems(req) {
     console.error('Error in POST request:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-}
+})
