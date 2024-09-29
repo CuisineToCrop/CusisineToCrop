@@ -4,9 +4,9 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 
 const Menus = [
-  { title: "Dashboard", src: "Chart_fill", href: "/dashboard" },
-  { title: "Accounts", src: "User", href: "/account" },
-  { title: "Details", src: "Ingredients", href: "/details" },
+  { title: "Dashboard", src: "Chart_fill", href: "/Dashboard" },
+  { title: "Accounts", src: "User", href: "/Account" },
+  { title: "Logout", src: "LogOut", href: "/LogOut" },
 ];
 
 export default function Nav({ isMobile }) {
@@ -53,7 +53,10 @@ export default function Nav({ isMobile }) {
           )}
           {Menus.map((menu, index) => (
             <li key={index}>
-              <Link href={menu.href} className="flex items-center px-4 py-2 mt-4 text-gray-300 cursor-pointer hover:bg-zinc-500">
+              <Link
+                href={menu.href}
+                className="flex items-center px-4 py-2 mt-4 text-gray-300 cursor-pointer hover:bg-zinc-500"
+              >
                 <img
                   className="w-12 h-12"
                   src={`https://cdn-icons-png.flaticon.com/128/739/739249.png`}
@@ -65,7 +68,10 @@ export default function Nav({ isMobile }) {
           ))}
           {user && (
             <li>
-              <Link href="/api/auth/logout" className="flex items-center px-4 py-2 mt-4 text-gray-300 cursor-pointer hover:bg-zinc-500">
+              <Link
+                href="/api/auth/logout"
+                className="flex items-center px-4 py-2 mt-4 text-gray-300 cursor-pointer hover:bg-zinc-500"
+              >
                 <img
                   className="w-12 h-12"
                   src={`https://cdn-icons-png.flaticon.com/128/739/739249.png`}
