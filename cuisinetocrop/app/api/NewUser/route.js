@@ -7,6 +7,7 @@ export const POST = withApiAuthRequired(async function NewUser(req) {
         const session = await getSession(req);
 		const user = session.user;
         const { restaurantUrl, zipCode } = await req.json();
+        // session.user.isNewUser = false;
 
         // Validate the input
         if (!restaurantUrl || !zipCode) {

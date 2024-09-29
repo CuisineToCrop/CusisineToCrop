@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/navigation";
 
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Dashboard() {
   const [items, setItems] = useState([]);
@@ -17,19 +17,20 @@ export default function Dashboard() {
     }
   }, [user, router]);
 
-
   useEffect(() => {
     let isMounted = true;
 
     const fetchMenuItems = async () => {
       try {
-
-        const response = await fetch('/api/ScrapeItems?url=https://www.ubereats.com/store/naked-farmer-coral-gables/TtPSvGfcXGWczR8LZ0xFvg?diningMode=DELIVERY&sc=SEARCH_SUGGESTION', {
-          method: "GET",
-        });
+        const response = await fetch(
+          "/api/ScrapeItems?url=https://www.ubereats.com/store/naked-farmer-coral-gables/TtPSvGfcXGWczR8LZ0xFvg?diningMode=DELIVERY&sc=SEARCH_SUGGESTION",
+          {
+            method: "GET",
+          }
+        );
 
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
 
         const data = await response.json();
@@ -48,7 +49,7 @@ export default function Dashboard() {
     };
 
     fetchMenuItems();
-    
+
     return () => {
       isMounted = false;
     };
@@ -65,7 +66,9 @@ export default function Dashboard() {
         {items.map((item, index) => (
           <Link href={`/details/${item.id}`} key={index}>
             <div className="bg-[#40C9A2] rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
-              <h2 className="text-xl font-semibold text-white mb-2">{item.name}</h2>
+              <h2 className="text-xl font-semibold text-white mb-2">
+                {item.name}
+              </h2>
               <p className="text-gray-100">{item.description}</p>
             </div>
           </Link>
