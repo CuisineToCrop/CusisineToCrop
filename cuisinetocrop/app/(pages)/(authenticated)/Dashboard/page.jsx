@@ -1,17 +1,29 @@
-// app/dashboard/page.jsx
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useRouter } from "next/navigation";
+
 import Link from 'next/link';
 
 export default function Dashboard() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user, error, isLoading: userLoading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user && user.isNewUser) {
+      router.push("/NewUser");
+    }
+  }, [user, router]);
+
 
   useEffect(() => {
     let isMounted = true;
 
     const fetchMenuItems = async () => {
       try {
+
         const response = await fetch('/api/ScrapeItems?url=https://www.ubereats.com/store/naked-farmer-coral-gables/TtPSvGfcXGWczR8LZ0xFvg?diningMode=DELIVERY&sc=SEARCH_SUGGESTION', {
           method: "GET",
         });
@@ -27,7 +39,7 @@ export default function Dashboard() {
           setItems(data.items);
         }
       } catch (error) {
-        console.error('Error fetching menu items:', error);
+        console.error("Error fetching menu items:", error);
       } finally {
         if (isMounted) {
           setLoading(false);
@@ -36,7 +48,7 @@ export default function Dashboard() {
     };
 
     fetchMenuItems();
-
+    
     return () => {
       isMounted = false;
     };

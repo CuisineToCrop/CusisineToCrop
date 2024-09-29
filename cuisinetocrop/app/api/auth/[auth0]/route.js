@@ -1,15 +1,24 @@
 import { handleAuth, handleLogin, handleCallback } from "@auth0/nextjs-auth0";
+// import { FindUser } from "@/app/_lib/mongoDB/utils/FindUser.js";
 
-//session is basically information about user being logged in here is documentation:https://auth0.github.io/nextjs-auth0/types/handlers_callback.AfterCallbackAppRoute.html
-//session must be the middle item, we use the "_" to ignore the 1st and 3rd parameter.
-const afterCallback = (_, session, __) => {
-	// console.log(session.user);
-	return session;
+const afterCallback = async (req, session, state) => {
+  try {
+    // const isNewUser = await addNewUser(session.user.sub, session.user.email);
+    
+    // Add a custom claim to the session
+    // session.user.isNewUser = isNewUser;
+	session.user.isNewUser = true;
+	console.log(session.user);
+    return session;
+  } catch (error) {
+    console.error("Error in afterCallback:", error);
+    return session;
+  }
 };
 
 export const GET = handleAuth({
-	login: handleLogin({
-		returnTo: (req) => req.query.returnTo || "/Dashboard",
-	}),
-	callback: handleCallback({ afterCallback }),
+  login: handleLogin({
+    returnTo: (req) => req.query.returnTo || "/dashboard",
+  }),
+  callback: handleCallback({ afterCallback }),
 });

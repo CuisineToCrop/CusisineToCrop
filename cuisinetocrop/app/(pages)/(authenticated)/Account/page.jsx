@@ -1,13 +1,22 @@
 // app/account/page.jsx
 "use client";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import Link from "next/link";
+import Link from "next/link"; // Import Link from Next.js
+import { useRouter } from "next/navigation";
+
 
 export default function Account() {
   const { user, error, isLoading } = useUser();
+  const router = useRouter();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
+
+  useEffect(() => {
+    if (user && user.isNewUser) {
+      router.push("/NewUser");
+    }
+  }, [user, router]);
 
   return (
     <div className="w-full p-8 mt-16 bg-[#E5F9E0]">
