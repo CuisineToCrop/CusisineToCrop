@@ -12,7 +12,7 @@ export const GET = withApiAuthRequired(async function CheckUser(req) {
     if (user) {
       return NextResponse.json({ exists: true }, { status: 200 });
     } else {
-      return NextResponse.json({ exists: false }, { status: 404 });
+      return NextResponse.json({ exists: false }, { status: 200 });
     }
   } catch (error) {
     console.error("Error checking user existence:", error);
