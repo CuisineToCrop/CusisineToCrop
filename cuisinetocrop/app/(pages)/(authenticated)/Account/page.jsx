@@ -20,7 +20,7 @@ export default function Account() {
           <div className="mb-4">
             <h3 className="text-xl font-semibold mb-2">Farm Information</h3>
             <p><strong>Location:</strong> {user.farm_location || "Not specified"}</p>
-            <p><strong>UberEats URL:</strong> {user.ubereats_url || "Not specified"}</p>
+            <p><strong>UberEats URL:</strong> {user.url || "Not specified"}</p>
           </div>
           
           <div className="flex justify-center">

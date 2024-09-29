@@ -32,9 +32,19 @@ export default function Home() {
           </div>
         </section>
         
-        <Link href="/dashboard" className="inline-block bg-[#02254D] text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition duration-300">
+        <Link href="/api/auth/login">
+            <button className="inline-block bg-[#02254D] text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition duration-300">
+              Log in
+            </button>
+          </Link>
+
+          <break></break>
+
+        <Link href="/Dashboard" className="inline-block bg-[#02254D] text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition duration-300">
           Go to Dashboard
         </Link>
+
+        
       </main>
     </div>
   );
